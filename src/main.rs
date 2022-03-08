@@ -1,8 +1,33 @@
-#[macro_use] extern crate rocket;
+#![feature(proc_macro_hygiene, decl_macro)]
+#[macro_use]
+extern crate rocket;
+use rocket::{get, routes};
+use rocket::{Request, Response};
+use serde::{Serialize, Deserialize};
+use rocket_contrib::json::Json;
 
-#[get("/")]
+mod models;
+use crate::models::user::User;
+
+#[derive(Serialize)]
+struct StatusMessage {
+    message: String,
+}
+
+
+/*
+#[post("/api/profile", format = "text/plain", data = "<data>")]
+fn update_profile(data: String) -> &'static str {
+    let user: User = serde_json::from_str(&data).unwrap();
+    //println!("{:?}", &user);
+    
+    "POST Complete"
+}
+*/
+
+#[get("/", format = "text/html")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "Hello World"
 }
 
 #[launch]
